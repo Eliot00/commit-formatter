@@ -61,7 +61,7 @@ pub fn get_optional_commit_body_and_footer() -> Option<String> {
         .unwrap();
     if should_open_editor {
         return Editor::new()
-            .edit("\n# Enter your commit's optional body and footer")
+            .edit("")
             .unwrap();
     }
     None
