@@ -7,7 +7,7 @@ description = "A CLI tool to help you write git commit"
 homepage = "https://github.com/Eliot00/commit-formatter"
 repository = "https://github.com/Eliot00/commit-formatter"
 keywords = ["cli", "git"]
-license-file = "LICENSE"
+license = "MIT OR Apache-2.0"
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
