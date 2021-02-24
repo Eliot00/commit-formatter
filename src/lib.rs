@@ -53,16 +53,14 @@ impl Display for CommitType {
 }
 
 pub fn get_optional_commit_body_and_footer() -> Option<String> {
-    let should_open_editor =  Confirm::new()
+    let should_open_editor = Confirm::new()
         .with_prompt("Do you want to write a long description?")
         .default(false)
         .show_default(false)
         .interact()
         .unwrap();
     if should_open_editor {
-        return Editor::new()
-            .edit("")
-            .unwrap();
+        return Editor::new().edit("").unwrap();
     }
     None
 }
@@ -71,7 +69,7 @@ pub fn put_together_commit_message(
     commit_type: CommitType,
     scope: String,
     subject: String,
-    optional_body_and_footer: Option<String>
+    optional_body_and_footer: Option<String>,
 ) -> String {
     let mut format_commit_message = commit_type.text.to_string();
     if scope.is_empty() {
@@ -94,16 +92,16 @@ mod tests {
     fn test_commit_to_string() {
         let fix = CommitType {
             text: "fix",
-            description: "just for test"
+            description: "just for test",
         };
-        assert_eq!(fix.to_string(), "fix      : just for test");
+        assert_eq!(fix.to_string(), String::from("fix      : just for test"));
     }
 
     #[test]
     fn test_composite_commit() {
         let bug = CommitType {
             text: "bug",
-            description: "a test"
+            description: "a test",
         };
         let scope = String::from("view");
         let subject = String::from("test example");
