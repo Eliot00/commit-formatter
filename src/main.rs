@@ -13,6 +13,7 @@ fn main() -> std::io::Result<()> {
         .with_prompt("Please select a header:")
         .items(&commit_types)
         .default(0)
+        .paged(true)
         .interact_on_opt(&Term::stderr())?;
 
     let commit_type = match selection {
