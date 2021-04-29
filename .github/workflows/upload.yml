@@ -1,0 +1,79 @@
+name: Upload
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_ubuntu:
+    name: Build Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Build
+        run: cargo build release
+
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/commit-formatter
+          asset_name: commit-formatter-linux
+          tag: ${{ github.ref }}
+
+  build_windows:
+    name: Build Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Build
+        run: cargo build release
+
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/commit-formatter.exe
+          asset_name: commit-formatter-windows.exe
+          tag: ${{ github.ref }}
+
+  build_macOS:
+    name: Build macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Build
+        run: cargo build release
+
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/commit-formatter
+          asset_name: commit-formatter-mac
+          tag: ${{ github.ref }}
