@@ -20,7 +20,7 @@ jobs:
           toolchain: stable
 
       - name: Build
-        run: cargo build release
+        run: cargo build --release
 
       - name: Upload to release
         uses: svenstaro/upload-release-action@v1-release
@@ -44,7 +44,7 @@ jobs:
           toolchain: stable
 
       - name: Build
-        run: cargo build release
+        run: cargo build --release
 
       - name: Upload to release
         uses: svenstaro/upload-release-action@v1-release
@@ -68,7 +68,7 @@ jobs:
           toolchain: stable
 
       - name: Build
-        run: cargo build release
+        run: cargo build --release
 
       - name: Upload to release
         uses: svenstaro/upload-release-action@v1-release
