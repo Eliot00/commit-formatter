@@ -1,48 +1,14 @@
 use dialoguer::{Confirm, Editor};
 use std::fmt::{self, Display, Formatter};
 
-#[derive(Copy, Clone)]
 pub struct CommitType {
-    text: &'static str,
-    description: &'static str,
+    text: String,
+    description: String,
 }
 
 impl CommitType {
-    pub fn default_commit_types() -> [CommitType; 8] {
-        [
-            CommitType {
-                text: "feat",
-                description: "A new feature"
-            },
-            CommitType {
-                text: "fix",
-                description: "A bug fix"
-            },
-            CommitType {
-                text: "docs",
-                description: "Documentation only changes"
-            },
-            CommitType {
-                text: "style",
-                description: "Changes that do not affect the meaning of the code(white-space, fomatting, missing semi-colons, etc)"
-            },
-            CommitType {
-                text: "refactor",
-                description: "A code change that neither fixes a bug or adds a feature"
-            },
-            CommitType {
-                text: "perf",
-                description: "A code change that improves performance"
-            },
-            CommitType {
-                text: "test",
-                description: "Adding missing tests"
-            },
-            CommitType {
-                text: "chore",
-                description: "Change to the build process or auxiliary tools and libraries such as documentation generation"
-            },
-        ]
+    pub fn new(text: &str, description: &str) -> Self {
+        Self { text: text.to_string(), description: description.to_string() }
     }
 }
 
@@ -50,6 +16,19 @@ impl Display for CommitType {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "{:9}: {}", self.text, self.description)
     }
+}
+
+pub fn get_default_commit_types() -> [CommitType; 8] {
+    [
+        CommitType::new("feat", "A new feature"),
+        CommitType::new("fix", "A bug fix"),
+        CommitType::new("docs", "Documentation only changes"),
+        CommitType::new("style", "Changes that do not affect the meaning of the code(white-space, fomatting, missing semi-colons, etc)"),
+        CommitType::new("refactor", "A code change that neither fixes a bug or adds a feature"),
+        CommitType::new("perf", "A code change that improves performance"),
+        CommitType::new("test", "Adding missing tests"),
+        CommitType::new("chore", "Change to the build process or auxiliary tools and libraries such as documentation generation"),
+    ]
 }
 
 pub fn get_optional_commit_body_and_footer() -> Option<String> {
@@ -66,7 +45,7 @@ pub fn get_optional_commit_body_and_footer() -> Option<String> {
 }
 
 pub fn put_together_commit_message(
-    commit_type: CommitType,
+    commit_type: &CommitType,
     scope: String,
     subject: String,
     optional_body_and_footer: Option<String>,
@@ -90,23 +69,17 @@ mod tests {
 
     #[test]
     fn test_commit_to_string() {
-        let fix = CommitType {
-            text: "fix",
-            description: "just for test",
-        };
+        let fix = CommitType::new("fix", "just for test");
         assert_eq!(fix.to_string(), String::from("fix      : just for test"));
     }
 
     #[test]
     fn test_composite_commit() {
-        let bug = CommitType {
-            text: "bug",
-            description: "a test",
-        };
+        let bug = CommitType::new("bug", "a test");
         let scope = String::from("view");
         let subject = String::from("test example");
         let other: Option<String> = None;
-        let result = put_together_commit_message(bug, scope, subject, other);
+        let result = put_together_commit_message(&bug, scope, subject, other);
         assert_eq!(result, String::from("bug(view): test example"))
     }
 }

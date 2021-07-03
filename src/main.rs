@@ -1,5 +1,5 @@
 use commit_formatter::{
-    CommitType,
+    get_default_commit_types,
     get_optional_commit_body_and_footer,
     put_together_commit_message
 };
@@ -8,7 +8,7 @@ use dialoguer::{theme::ColorfulTheme, Input, Select};
 use std::process::Command;
 
 fn main() -> std::io::Result<()> {
-    let commit_types = CommitType::default_commit_types();
+    let commit_types = get_default_commit_types();
     let selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("Please select a header:")
         .items(&commit_types)
@@ -17,7 +17,7 @@ fn main() -> std::io::Result<()> {
         .interact_on_opt(&Term::stderr())?;
 
     let commit_type = match selection {
-        Some(index) => commit_types[index],
+        Some(index) => &commit_types[index],
         None => panic!("Must select a commit type!"),
     };
 
