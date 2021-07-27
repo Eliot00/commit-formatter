@@ -1,6 +1,6 @@
 [package]
 name = "commit-formatter"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Elliot <hack00mind@gmail.com>"]
 edition = "2018"
 description = "A CLI tool to help you write git commit"
