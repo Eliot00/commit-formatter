@@ -1,6 +1,10 @@
+use serde::{Serialize, Deserialize};
 use dialoguer::{Confirm, Editor};
 use std::fmt::{self, Display, Formatter};
+use std::fs::read_to_string;
+use std::io::Result;
 
+#[derive(Serialize, Deserialize)]
 pub struct CommitType {
     text: String,
     description: String,
@@ -18,8 +22,8 @@ impl Display for CommitType {
     }
 }
 
-pub fn get_default_commit_types() -> [CommitType; 8] {
-    [
+pub fn get_default_commit_types() -> Vec<CommitType> {
+    vec![
         CommitType::new("feat", "A new feature"),
         CommitType::new("fix", "A bug fix"),
         CommitType::new("docs", "Documentation only changes"),
@@ -29,6 +33,12 @@ pub fn get_default_commit_types() -> [CommitType; 8] {
         CommitType::new("test", "Adding missing tests"),
         CommitType::new("chore", "Change to the build process or auxiliary tools and libraries such as documentation generation"),
     ]
+}
+
+pub fn get_cm_types_from_file() -> Result<Vec<CommitType>> {
+    let f = read_to_string("commit-format.json")?;
+    let cm_types: Vec<CommitType> = serde_json::from_str(&f)?;
+    Ok(cm_types)
 }
 
 pub fn get_optional_commit_body_and_footer() -> Option<String> {
