@@ -1,8 +1,8 @@
 [package]
 name = "commit-formatter"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Elliot <hack00mind@gmail.com>"]
-edition = "2018"
+edition = "2021"
 description = "A CLI tool to help you write git commit"
 homepage = "https://github.com/Eliot00/commit-formatter"
 repository = "https://github.com/Eliot00/commit-formatter"
@@ -21,3 +21,7 @@ serde_json = "1.0"
 [lib]
 name = "commit_formatter"
 path = "src/lib.rs"
+
+[[bin]]
+name = "git-cf"
+path = "src/main.rs"
