@@ -19,6 +19,8 @@ git add <files>
 cf
 ```
 
+**Updated**: after version `0.2.1`, this crate's binary target name specified to `git-cf`, so you can use it with `git cf` as a git subcommand.
+
 ## Custom
 
 Put a `commit-format.json` in your project directory.
