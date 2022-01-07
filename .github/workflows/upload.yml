@@ -26,7 +26,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/release/commit-formatter
+          file: target/release/git-cf
           asset_name: commit-formatter-linux
           tag: ${{ github.ref }}
 
@@ -50,7 +50,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/release/commit-formatter.exe
+          file: target/release/git-cf.exe
           asset_name: commit-formatter-windows.exe
           tag: ${{ github.ref }}
 
@@ -74,6 +74,6 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/release/commit-formatter
+          file: target/release/git-cf
           asset_name: commit-formatter-mac
           tag: ${{ github.ref }}
