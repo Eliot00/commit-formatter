@@ -4,11 +4,10 @@ use commit_formatter::{
     get_optional_commit_body_and_footer,
     put_together_commit_message
 };
-use console::Term;
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 use std::process::Command;
 
-fn main() -> std::io::Result<()> {
+fn main() {
     let commit_types = if let Ok(types) = get_cm_types_from_file() {
         types
     } else {
@@ -19,8 +18,8 @@ fn main() -> std::io::Result<()> {
         .with_prompt("Please select a header:")
         .items(&commit_types)
         .default(0)
-        .paged(true)
-        .interact_on_opt(&Term::stderr())?;
+        .interact_opt()
+        .unwrap();
 
     let commit_type = match selection {
         Some(index) => &commit_types[index],
@@ -30,11 +29,13 @@ fn main() -> std::io::Result<()> {
     let scope: String = Input::new()
         .with_prompt("The scope of this change")
         .allow_empty(true)
-        .interact_text()?;
+        .interact_text()
+        .unwrap();
 
     let subject: String = Input::new()
         .with_prompt("A short description for your commit")
-        .interact_text()?;
+        .interact_text()
+        .unwrap();
 
     let other = get_optional_commit_body_and_footer();
     let commit_message = put_together_commit_message(commit_type, scope, subject, other);
@@ -43,6 +44,4 @@ fn main() -> std::io::Result<()> {
         .args(&["commit", "-m", &commit_message])
         .status()
         .expect("Failed to git commit");
-
-    Ok(())
 }
