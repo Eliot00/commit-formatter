@@ -23,7 +23,10 @@ fn main() {
 
     let commit_type = match selection {
         Some(index) => &commit_types[index],
-        None => panic!("Must select a commit type!"),
+        None => {
+            println!("Must select a commit type!");
+            return ();
+        }
     };
 
     let scope: String = Input::new()
